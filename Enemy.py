@@ -7,6 +7,7 @@ ENEMYTYPE = ['BASE', 'TYPE1', 'TYPE']
 
 
 class Enemy():
+    enemyAngle = 0
     enemyType = 'BASE'
     enemyHP = 2
     enemySize = [0,0]
@@ -18,11 +19,13 @@ class Enemy():
         self.enemyPos = pos
         self.rect = pygame.Rect(self.enemyPos[0], self.enemyPos[1], self.enemySize[0], self.enemySize[1])
     def __init__(self):
-        self.enemySize = (34, 34)
+        self.enemySize = (45, 45)
         self.enemyPos = [0, 0]
         self.rect = pygame.Rect(self.enemyPos[0], self.enemyPos[1], self.enemySize[0], self.enemySize[1])
     def move(self):
         self.enemyPos[1] += self.enemyMove
+        self.enemyAngle += 0.7
+        self.rect = pygame.Rect(self.enemyPos[0], self.enemyPos[1], self.enemySize[0], self.enemySize[1])
     
     def destroy(self):
         if self.enemyPos[1] > SpaceShip.SCREENHEIGHT:

@@ -10,7 +10,7 @@ from pygame.locals import*
 SCREENHEIGHT = 600 #Chieu dai man hinh
 SCREENWIDTH = 480 #Chieu ngang man hinh
 PLAYERSIZE = (70, 90)
-SPAWNENEMY = 0.1
+SPAWNENEMY = 0.05
 LISTENEMY = []
 ENEMYTIMECURRENT = 0
 
@@ -25,7 +25,7 @@ def game_init():
     GAMEENEMYIMAGE = GAMEIMAGEMANAGER.ENEMYIMAGE
     GAMEBGIMAGE = GAMEIMAGEMANAGER.BGIMAGE
     GAMEBULLETIMAGE = GAMEIMAGEMANAGER.BULLETIMAGE
-    GAMEBULLETIMAGE = pygame.transform.smoothscale(GAMEBULLETIMAGE, (10, 20))
+    #GAMEBULLETIMAGE = pygame.transform.smoothscale(GAMEBULLETIMAGE, (10, 20))
     GAMEBGIMAGE = pygame.transform.smoothscale(GAMEBGIMAGE, (SCREENWIDTH, SCREENHEIGHT))
     GAMEPLAYERIMAGE = GAMEIMAGEMANAGER.PLAYERIMAGE
     GAMEPLAYERIMAGE = pygame.transform.smoothscale(GAMEPLAYERIMAGE, (PLAYER.playerSize[0], PLAYER.playerSize[1]))
@@ -35,32 +35,39 @@ def game_draw():
     SCREEN.fill(0)
     SCREEN.blit(GAMEBGIMAGE, (BACKGROUND1.bgPos[0], BACKGROUND1.bgPos[1]))
     SCREEN.blit(GAMEBGIMAGE, (BACKGROUND2.bgPos[0], BACKGROUND2.bgPos[1]))
-    SCREEN.blit(GAMEPLAYERIMAGE, (PLAYER.playerPos[0], PLAYER.playerPos[1]))
+    if not PLAYER.isDie:
+        SCREEN.blit(GAMEPLAYERIMAGE, (PLAYER.playerPos[0], PLAYER.playerPos[1]))
+    else:
+        if PLAYER.playerLife > 0:
+            PLAYER.respawn()
     #SCREEN.blit(GAMEBULLETIMAGE, (100, 100))
     listBullet = PLAYER.listBullet
     #print len(listBullet)
     for bulletItem in listBullet:
+       global GAMEBULLETIMAGE
+       GAMEBULLETIMAGE = pygame.transform.smoothscale(GAMEBULLETIMAGE, (bulletItem.bulletSize[0], bulletItem.bulletSize[1]))
        SCREEN.blit(GAMEBULLETIMAGE, (bulletItem.bulletPos[0], bulletItem.bulletPos[1]))
     for enemyItem in LISTENEMY:
         enemyImage = None
         if enemyItem.enemyType == 'BASE':
-            enemeImage = GAMEENEMYIMAGE[0]
+            enemyImage = GAMEENEMYIMAGE[0]
         elif enemyItem.enemyType == 'TYPE1':
-            enemeImage = GAMEENEMYIMAGE[1]
+            enemyImage = GAMEENEMYIMAGE[1]
         else:
-            enemeImage = GAMEENEMYIMAGE[2]
-        SCREEN.blit(enemeImage, (enemyItem.enemyPos[0], enemyItem.enemyPos[1]))
+            enemyImage = GAMEENEMYIMAGE[2]
+        enemyImage = pygame.transform.rotate(enemyImage, enemyItem.enemyAngle)
+        SCREEN.blit(enemyImage, (enemyItem.enemyPos[0], enemyItem.enemyPos[1]))
     pygame.display.flip()
 
 def spawn_enemy():
     #ENEMYTIMECURRENT += 0.0016
-        types = list(range(len(Enemy.ENEMYTYPE)))
-        typeIndex = random.choice(types)
-        enemyObj = Enemy.Enemy()
-        enemyObj.enemyPos[0] = random.randint(0, SCREENWIDTH)
-        enemyObj.enemyPos[1] = -10
-        enemyObj.enemyType = Enemy.ENEMYTYPE[typeIndex]
-        LISTENEMY.append(enemyObj)
+    types = list(range(len(Enemy.ENEMYTYPE)))
+    typeIndex = random.choice(types)
+    enemyObj = Enemy.Enemy()
+    enemyObj.enemyPos[0] = random.randint(0, SCREENWIDTH - 50)
+    enemyObj.enemyPos[1] = -10
+    enemyObj.enemyType = Enemy.ENEMYTYPE[typeIndex]
+    LISTENEMY.append(enemyObj)   
 
 def game_input():
     key = pygame.key.get_pressed()
@@ -77,6 +84,7 @@ def game_update():
     BACKGROUND1.move(SCREENHEIGHT)
     BACKGROUND2.move(SCREENHEIGHT)
     PLAYER.shoot_spawn()
+    PLAYER.collision(LISTENEMY)
     global ENEMYTIMECURRENT
     ENEMYTIMECURRENT += 0.0016
     print 'Time spawn_enemy %s' %ENEMYTIMECURRENT
@@ -85,6 +93,10 @@ def game_update():
         ENEMYTIMECURRENT = 0
     for enemeObj in LISTENEMY:
         enemeObj.move()
+        enemeObj.destroy()
+        if enemeObj.isDestroy == True:
+            LISTENEMY.remove(enemeObj)
+            del enemeObj
 
 def main():
     game_init()

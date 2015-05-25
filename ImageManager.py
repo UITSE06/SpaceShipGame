@@ -4,7 +4,7 @@ from pygame.locals import*
 PLAYERPATH = 'ship.png'
 BACKGROUNDPATH = 'bg_space1.png'
 BULLETPATH = 'bullet.png'
-ENEMYPATH = 'gem%s.png'
+ENEMYPATH = 'stone%s.png'
 NUMENEMY = 3
 
 
@@ -20,6 +20,7 @@ class ImageManager(object):
             self.BULLETIMAGE = pygame.image.load(BULLETPATH)
             for i in range(1, NUMENEMY + 1):
                 imageItem = pygame.image.load(ENEMYPATH % i)
+                imageItem = pygame.transform.smoothscale(imageItem, (50, 50))
                 self.ENEMYIMAGE.append(imageItem)
     instance = None
     def __new__(cls): # __new__ always a classmethod
