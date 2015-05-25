@@ -1,5 +1,6 @@
 ﻿#Khai bao thu vien
 import SpaceShip
+import SoundManager
 import Bullet
 import random, time, pygame, sys, copy, decimal
 from pygame.locals import*
@@ -45,6 +46,7 @@ class Player():
             bullet.bulletPos[0] = self.playerPos[0] + self.playerSize[0] / 2 - 5
             bullet.bulletPos[1] = self.playerPos[1] - self.playerSize[1] / 2
             self.listBullet.append(bullet)
+            SoundManager.SoundManager().BULLETSOUND.play()
 
     def shoot_spawn(self):
         if not self.isDie:
@@ -64,6 +66,8 @@ class Player():
                 if self.rect.colliderect(enemyObj.rect):
                     enemyObj.isDestroy = True
                     self.isDie = True
+                    #SoundManager.SoundManager().ENEMEDESTROYSOUND.play()
+                    SoundManager.SoundManager().PLAYERDESTROYSOUND.play()
 
     def respawn(self):
         self.timeDieCurrent += 0.016

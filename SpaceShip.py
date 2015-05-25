@@ -1,4 +1,5 @@
 ﻿#Khai bao thu vien
+import SoundManager
 import Enemy
 import ImageManager
 import Player
@@ -15,9 +16,10 @@ LISTENEMY = []
 ENEMYTIMECURRENT = 0
 
 def game_init():
-    global SCREEN, GAMEBGIMAGE, GAMEPLAYERIMAGE, GAMEBULLETIMAGE, GAMEENEMYIMAGE , GAMEIMAGEMANAGER, PLAYER, BACKGROUND1, BACKGROUND2, CLOCK
+    global SCREEN, GAMEBGIMAGE, GAMEPLAYERIMAGE, GAMEBULLETIMAGE, GAMEENEMYIMAGE , GAMEIMAGEMANAGER, PLAYER, BACKGROUND1, BACKGROUND2, CLOCK, SOUND
     pygame.init()
     GAMEIMAGEMANAGER = ImageManager.ImageManager()
+    SOUND = SoundManager.SoundManager()
     PLAYER = Player.Player()
     BACKGROUND1 = BackGround.BackGround([0, -SCREENHEIGHT])
     BACKGROUND2 = BackGround.BackGround([0, 0])
@@ -30,6 +32,9 @@ def game_init():
     GAMEPLAYERIMAGE = GAMEIMAGEMANAGER.PLAYERIMAGE
     GAMEPLAYERIMAGE = pygame.transform.smoothscale(GAMEPLAYERIMAGE, (PLAYER.playerSize[0], PLAYER.playerSize[1]))
     CLOCK = pygame.time.Clock()
+    #SOUND.play()
+    pygame.mixer.music.play(-1)
+    pygame.mixer.music.set_volume(0.7)
 
 def game_draw():
     SCREEN.fill(0)

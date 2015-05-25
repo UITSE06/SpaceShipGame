@@ -1,4 +1,5 @@
 ﻿#Khai bao thu vien
+import SoundManager
 import random, time, pygame, sys, copy
 from pygame.locals import*
 
@@ -25,6 +26,7 @@ class Bullet():
             if self.rect.colliderect(enemyObj.rect):
                 self.isDestroy = True
                 enemyObj.isDestroy = True
+                SoundManager.SoundManager().ENEMYDESTROYSOUND.play()
                 break
 
     def destroy(self):
