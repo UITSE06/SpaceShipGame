@@ -113,6 +113,12 @@ class GameSpaceShip(object):
             enemyObj.enemyPos[0] = random.randint(0, SCREENWIDTH - 50)
             enemyObj.enemyPos[1] = -10
             enemyObj.enemyType = Enemy.ENEMYTYPE[typeIndex]
+            if enemyObj.enemyType == 'BASE':
+               enemyObj.enemyMove = 5
+            elif enemyObj.enemyType == 'TYPE1':
+               enemyObj.enemyMove = 6
+            else:
+               enemyObj.enemyMove = 9
             self.listEnemy.append(enemyObj)   
 
         def game_input(self):
