@@ -15,6 +15,7 @@ SCREENWIDTH = 480 #Chieu ngang man hinh
 
 class GameSpaceShip(object):
     class __GameSpaceShip():
+        isGameOver = False
         screen = None
         gameImage = None
         gameplayerImage = None
@@ -60,6 +61,8 @@ class GameSpaceShip(object):
             self.screen.blit(self.gameImage, (self.backGround1.bgPos[0], self.backGround1.bgPos[1]))
             self.screen.blit(self.gameImage, (self.backGround2.bgPos[0], self.backGround2.bgPos[1]))
             self.draw_score()
+            if self.isGameOver:
+                self.draw_game_over()
             if not self.player.isDie:
                 self.screen.blit(self.gameplayerImage, (self.player.playerPos[0], self.player.playerPos[1]))
             else:
@@ -96,6 +99,12 @@ class GameSpaceShip(object):
             scoreRect = scoreImage.get_rect()
             scoreRect.bottomleft = (80, 115)
             self.screen.blit(scoreImage, scoreRect)
+           
+        def draw_game_over(self):
+            gameOverImage = self.textFont.render('GAME OVER', 1, (255, 249, 153))
+            gameOverRect = gameOverImage.get_rect()
+            gameOverRect.bottomleft = (SCREENWIDTH /2 - gameOverRect.width / 2, SCREENHEIGHT / 2)
+            self.screen.blit(gameOverImage, gameOverRect)
         def spawn_enemy(self):
             #ENEMYTIMECURRENT += 0.0016
             types = list(range(len(Enemy.ENEMYTYPE)))
@@ -130,9 +139,13 @@ class GameSpaceShip(object):
                     self.player.playerLife += 1
                 if self.spawnEnemy > 0.02:
                     self.spawnEnemy -= 0.005
-            if self.enemyTimeCurrent > self.spawnEnemy:
-                self.spawn_enemy()
-                self.enemyTimeCurrent = 0
+            if self.player.playerLife == 0:
+                if self.player.isDie == True:
+                    self.isGameOver = True
+            else:
+                if self.enemyTimeCurrent > self.spawnEnemy:
+                    self.spawn_enemy()
+                    self.enemyTimeCurrent = 0
             for enemeObj in self.listEnemy:
                 enemeObj.move()
                 enemeObj.destroy()

@@ -1,5 +1,5 @@
 ﻿#Khai bao thu vien
-import SpaceShip
+import SpaceShip2
 import SoundManager
 import Bullet
 import random, time, pygame, sys, copy, decimal, glob
@@ -24,16 +24,16 @@ class Player():
         self.rect = pygame.Rect(self.playerPos[0], self.playerPos[1], self.playerSize[0], self.playerSize[1])
     def __init__(self):
         self.playerSize = (60, 70)
-        self.playerPos = [SpaceShip.SCREENWIDTH / 2, SpaceShip.SCREENHEIGHT - self.playerSize[1]]
+        self.playerPos = [SpaceShip2.SCREENWIDTH / 2, SpaceShip2.SCREENHEIGHT - self.playerSize[1]]
         self.rect = pygame.Rect(self.playerPos[0], self.playerPos[1], self.playerSize[0], self.playerSize[1])
     def move(self, moveType):
         self.move_single_axis(moveType)
-        if self.playerPos[1] > SpaceShip.SCREENHEIGHT - self.playerSize[1]:
-            self.playerPos[1] =  SpaceShip.SCREENHEIGHT - self.playerSize[1]
+        if self.playerPos[1] > SpaceShip2.SCREENHEIGHT - self.playerSize[1]:
+            self.playerPos[1] =  SpaceShip2.SCREENHEIGHT - self.playerSize[1]
         elif self.playerPos[1] < 0:
             self.playerPos[1] = 0
-        elif self.playerPos[0] > SpaceShip.SCREENWIDTH - self.playerSize[0]:
-            self.playerPos[0] =  SpaceShip.SCREENWIDTH - self.playerSize[0]
+        elif self.playerPos[0] > SpaceShip2.SCREENWIDTH - self.playerSize[0]:
+            self.playerPos[0] =  SpaceShip2.SCREENWIDTH - self.playerSize[0]
         elif self.playerPos[0] < 0:
             self.playerPos[0] = 0
         self.rect = pygame.Rect(self.playerPos[0], self.playerPos[1], self.playerSize[0], self.playerSize[1])
