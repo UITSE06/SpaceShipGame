@@ -2,7 +2,7 @@
 import SpaceShip
 import SoundManager
 import Bullet
-import random, time, pygame, sys, copy, decimal
+import random, time, pygame, sys, copy, decimal, glob
 from pygame.locals import*
 
 PLAYERPATH = 'ship.png'
@@ -18,6 +18,7 @@ class Player():
     timeDieCurrent = 0
     timeRespawn = 0.8
     def __init__(self, size, pos):
+        self.ani_speed_init = 10
         self.playerSize = size
         self.playerPos = pos
         self.rect = pygame.Rect(self.playerPos[0], self.playerPos[1], self.playerSize[0], self.playerSize[1])

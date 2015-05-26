@@ -1,5 +1,5 @@
 ﻿#Khai bao thu vien
-import SpaceShip
+import SpaceShip2
 import random, time, pygame, sys, copy
 from pygame.locals import*
 
@@ -28,6 +28,6 @@ class Enemy():
         self.rect = pygame.Rect(self.enemyPos[0], self.enemyPos[1], self.enemySize[0], self.enemySize[1])
     
     def destroy(self):
-        if self.enemyPos[1] > SpaceShip.SCREENHEIGHT:
+        if self.enemyPos[1] > SpaceShip2.SCREENHEIGHT:
             self.isDestroy = True
     
