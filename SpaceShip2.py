@@ -58,6 +58,7 @@ class GameSpaceShip(object):
             pygame.mixer.music.play(-1)
             pygame.mixer.music.set_volume(0.7)
         def game_reset(self):
+            self.score = 0
             self.isGameOver = False
             self.spawnEnemy = 0.05
             self.player.reset()
