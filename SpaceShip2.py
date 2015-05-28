@@ -1,4 +1,5 @@
 ﻿#Khai bao thu vien
+import Buttons
 import SpaceShip2
 import SoundManager
 import Enemy
@@ -33,6 +34,7 @@ class GameSpaceShip(object):
         listEnemy = []
         spawnEnemy = 0.05
         enemyTimeCurrent = 0
+        btnRestart = None
         def __init__(self):
             pygame.init()
             self.gameImageManager = ImageManager.ImageManager()
@@ -51,10 +53,16 @@ class GameSpaceShip(object):
             self.lifeImage =  pygame.transform.smoothscale(self.gameImageManager.LIFEIMAGE, (35, 40))
             self.gameBulletImage = pygame.transform.smoothscale(self.gameBulletImage, (10, 20))
             self.textFont = pygame.font.Font('GOUDYSTO.TTF', 25)
+            self.btnRestart = Buttons.Button(self.gameImageManager.BUTTONRESTARTIMAGE)
             #sound.play()
             pygame.mixer.music.play(-1)
             pygame.mixer.music.set_volume(0.7)
-
+        def game_reset(self):
+            self.isGameOver = False
+            self.spawnEnemy = 0.05
+            self.player.reset()
+            if len(self.listEnemy) > 0:
+                self.listEnemy.pop(len(self.listEnemy) - 1)
         def game_draw(self):
             self.screen.fill(0)
             self.screen.blit(self.gameplayerImage, (0, 0))
@@ -103,8 +111,9 @@ class GameSpaceShip(object):
         def draw_game_over(self):
             gameOverImage = self.textFont.render('GAME OVER', 1, (255, 249, 153))
             gameOverRect = gameOverImage.get_rect()
-            gameOverRect.bottomleft = (SCREENWIDTH /2 - gameOverRect.width / 2, SCREENHEIGHT / 2)
+            gameOverRect.bottomleft = (SCREENWIDTH /2 - gameOverRect.width / 2, SCREENHEIGHT / 2 - 50)
             self.screen.blit(gameOverImage, gameOverRect)
+            self.btnRestart.create_button(self.screen, SCREENWIDTH / 2 - 110, SCREENHEIGHT / (2.5) + gameOverRect.height + 10, 220, 100)
         def spawn_enemy(self):
             #ENEMYTIMECURRENT += 0.0016
             types = list(range(len(Enemy.ENEMYTYPE)))
@@ -148,7 +157,7 @@ class GameSpaceShip(object):
             if self.player.playerLife == 0:
                 if self.player.isDie == True:
                     self.isGameOver = True
-            else:
+            if not self.isGameOver == True:
                 if self.enemyTimeCurrent > self.spawnEnemy:
                     self.spawn_enemy()
                     self.enemyTimeCurrent = 0

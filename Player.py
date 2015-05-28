@@ -37,6 +37,14 @@ class Player():
         elif self.playerPos[0] < 0:
             self.playerPos[0] = 0
         self.rect = pygame.Rect(self.playerPos[0], self.playerPos[1], self.playerSize[0], self.playerSize[1])
+       
+    def reset(self): 
+        self.playerLife = 5
+        self.timeDieCurrent = 0 
+        self.timeCurrent = 0
+        self.isDie = False
+        if len(self.listBullet) > 0:
+           self.listBullet.pop(len(self.listBullet) - 1)
 
     def shoot(self):
         bullet = None 
