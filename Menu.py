@@ -7,7 +7,7 @@ from pygame.locals import*
 
 #Khoi tao ban dau
 TEXTCOLOR = (239, 255, 255, 1)
-SCREENHEIGHT = 600 #Chieu dai man hinh
+SCREENHEIGHT = 480 #Chieu dai man hinh
 SCREENWIDTH = 480 #Chieu ngang man hinh
 
 class GameMenu(object):

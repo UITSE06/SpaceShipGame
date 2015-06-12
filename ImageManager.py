@@ -14,7 +14,7 @@ BUTTONRESTARTPATH = 'bt_restart.png'
 BUTTONSAVEPATH = 'bt_save.png'
 INPUTPATH = 'input_score.png'
 MENUPATH = 'bg_menu1.png'
-SAVESCOREPATH = 'bg_saveScore1.png'
+SAVESCOREPATH = 'bg_saveScore3.png'
 NUMENEMY = 3
 
 

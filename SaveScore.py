@@ -24,16 +24,16 @@ class GameSaveScore(object):
             self.backGround = self.gameImageManager.MENUIMAGE
             self.foreGround = self.gameImageManager.SAVESCOREIMAGE
             self.btnSave = Buttons.Button(self.gameImageManager.BUTTONSAVEIMAGE)
-            self.foreGround = pygame.transform.smoothscale(self.foreGround, (SCREENWIDTH, SCREENHEIGHT))
+            self.foreGround = pygame.transform.smoothscale(self.foreGround, (SCREENWIDTH * 7 / 8, SCREENHEIGHT / 2))
             self.backGround = pygame.transform.smoothscale(self.backGround, (SCREENWIDTH, SCREENHEIGHT))
-            self.inputText = Inputs.Input(self.gameImageManager.INPUTIMAGE, (255,255,255), 10)
+            self.inputText = Inputs.Input(self.gameImageManager.INPUTIMAGE, (255,255,255), 5)
 
         def game_draw(self):
             self.screen.fill(0)
             self.screen.blit(self.backGround, (0,0))
-            self.screen.blit(self.foreGround, (0,0))
-            self.inputText.create_input(self.screen, 50,50, 300, 50)
-            self.btnSave.create_button(self.screen, SCREENWIDTH / 2 - 100, SCREENHEIGHT / (2.5) + 200, 100, 100)
+            self.screen.blit(self.foreGround, (SCREENWIDTH * 1 / 16,SCREENWIDTH / 4))
+            self.inputText.create_input(self.screen, SCREENWIDTH / 6.5 ,SCREENHEIGHT / 2.3, 250, 45)
+            self.btnSave.create_button(self.screen, SCREENWIDTH / 1.5, SCREENHEIGHT / (1.99), 100, 97)
             pygame.display.flip()
 
         def game_input(self, event):
